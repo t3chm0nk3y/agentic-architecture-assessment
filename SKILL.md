@@ -1,14 +1,14 @@
 ---
-name: agentic-audit
-description: Portable agentic architecture audit. Assesses any agentic application against behavioral principles across 9 domains using trace-based evidence collection. Produces a structured gap register report. Framework-agnostic, repository-agnostic, behavior-first.
+name: agentic-architecture-assessment
+description: Trace-based assessment of agentic system architecture, implementation enforcement, and runtime behavior. Evaluates 44 behavioral principles across 9 domains. Produces a structured gap register. Framework-agnostic, language-agnostic, behavior-first.
 disable-model-invocation: true
 ---
 
-# /agentic-audit — Agentic Architecture Audit
+# /agentic-architecture-assessment — Agentic Architecture Assessment
 
-Audit the current project against agentic architecture principles. Produce a structured gap register report that identifies architectural deviations, stability risks, and safety constraints. The report is the input to remediation planning.
+Assess the current project against agentic architecture principles. Evaluate whether architectural intent is correctly implemented and enforced in runtime behavior. Produce a structured gap register report that identifies architectural deviations, implementation gaps, enforcement failures, and safety constraints.
 
-This skill is portable — it assesses any agentic application regardless of framework, language, or stack. It reasons from behavioral invariants, not implementation patterns.
+This skill is portable — it assesses any agentic application regardless of framework, language, or stack. It reasons from behavioral invariants, not implementation patterns. It evaluates architecture, implementation enforcement, and runtime behavior — not design intent alone.
 
 ---
 

@@ -1,8 +1,10 @@
-# Agentic Architecture Assessment Framework
+# Agentic Architecture Assessment
 
-A portable, trace-based assessment framework for auditing agentic applications. Packaged as a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill that can be installed into any project.
+A trace-based assessment skill for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that evaluates whether agentic system architecture is correctly implemented and enforced in runtime behavior.
 
-Assesses **44 behavioral principles** across **9 architectural domains** — framework-agnostic, language-agnostic, behavior-first.
+Assesses **44 behavioral principles** across **9 architectural domains** -- framework-agnostic, language-agnostic, behavior-first.
+
+This is not a design review. The assessment follows execution traces through source code to evaluate architecture, implementation enforcement, control-plane integrity, and failure-path behavior. Documentation alone cannot justify a passing verdict.
 
 ---
 
@@ -14,17 +16,17 @@ Copy `SKILL.md` and `references/` into a Claude Code skill directory in your tar
 
 ```bash
 # From the root of your target project
-mkdir -p .claude/skills/agentic-audit
+mkdir -p .claude/skills/agentic-architecture-assessment
 
 # Option A: clone and copy
 git clone https://github.com/t3chm0nk3y/agentic-architecture-assessment.git /tmp/aaa
-cp /tmp/aaa/SKILL.md .claude/skills/agentic-audit/
-cp -r /tmp/aaa/references .claude/skills/agentic-audit/
+cp /tmp/aaa/SKILL.md .claude/skills/agentic-architecture-assessment/
+cp -r /tmp/aaa/references .claude/skills/agentic-architecture-assessment/
 rm -rf /tmp/aaa
 
 # Option B: if you already have the repo locally
-cp /path/to/agentic-architecture-assessment/SKILL.md .claude/skills/agentic-audit/
-cp -r /path/to/agentic-architecture-assessment/references .claude/skills/agentic-audit/
+cp /path/to/agentic-architecture-assessment/SKILL.md .claude/skills/agentic-architecture-assessment/
+cp -r /path/to/agentic-architecture-assessment/references .claude/skills/agentic-architecture-assessment/
 ```
 
 Your target project should now have:
@@ -33,7 +35,7 @@ Your target project should now have:
 your-project/
 ├── .claude/
 │   └── skills/
-│       └── agentic-audit/
+│       └── agentic-architecture-assessment/
 │           ├── SKILL.md
 │           └── references/
 │               ├── index.md
@@ -44,37 +46,65 @@ your-project/
 └── ...
 ```
 
-### Run the audit
+### Run the assessment
 
 In Claude Code, from your target project:
 
 ```
-/agentic-audit
+/agentic-architecture-assessment
 ```
 
 The skill runs three phases automatically:
 
-1. **Reconnaissance** — reads docs and project structure, classifies the system type
-2. **Evidence Collection** — follows execution traces to collect evidence per domain
-3. **Assessment** — applies principles, produces the structured gap register report
+1. **Reconnaissance** -- reads docs and project structure, classifies the system type
+2. **Evidence Collection** -- follows execution traces to collect evidence per domain
+3. **Assessment** -- applies principles, produces the structured gap register report
 
-Output is written to `docs/assessments/{project-name}-audit-{YYYY-MM-DD}.md` in the target project.
+### Output
+
+Reports are written to:
+
+```
+docs/assessments/{project-name}-audit-{YYYY-MM-DD}.md
+```
+
+The output directory is created automatically if it does not exist.
+
+---
+
+## Naming and Invocation
+
+These identifiers are intentionally aligned to prevent naming drift:
+
+| Aspect | Value |
+|--------|-------|
+| Repository | `agentic-architecture-assessment` |
+| Skill folder | `.claude/skills/agentic-architecture-assessment/` |
+| Slash command | `/agentic-architecture-assessment` |
 
 ---
 
 ## What It Assesses
 
+The assessment evaluates whether architectural intent is enforced in implementation and runtime behavior:
+
+- **Architecture** -- module boundaries, dependency direction, separation of concerns
+- **Implementation enforcement** -- whether stated constraints are actually checked and rejected on violation
+- **Runtime behavior** -- execution paths, state transitions, failure propagation
+- **Control-plane integrity** -- configuration discipline, startup safety, orchestration bounds
+- **Traceability** -- whether execution and failure paths can be reconstructed after the fact
+
 | Domain | Principles | Governs |
 |--------|-----------|---------|
-| Execution Boundaries | P1.1 -- P1.4 | Who can initiate, drive, and complete runs |
-| Configuration | P2.1 -- P2.4 | How runtime behavior is parameterized |
-| Observability | P3.1 -- P3.6 | How execution is traced, logged, and monitored |
-| Integration and Tool Model | P4.1 -- P4.5 | How external systems are accessed |
-| Schema and Contract Discipline | P5.1 -- P5.5 | How data shapes are defined and enforced |
-| Error Handling | P6.1 -- P6.5 | How failures are classified, propagated, and surfaced |
-| Orchestration Model | P7.1 -- P7.5 | How execution is sequenced and bounded |
-| Scalability and Extensibility | P8.1 -- P8.5 | How new capabilities are added |
-| Autonomous Agent Safety | P9.1 -- P9.5 | How agent authority is constrained |
+| Execution Boundaries | P1.1--P1.4 | Who can initiate, drive, and complete runs |
+| Configuration | P2.1--P2.4 | How runtime behavior is parameterized |
+| Observability | P3.1--P3.6 | How execution is traced, logged, and monitored |
+| Integration and Tool Model | P4.1--P4.5 | How external systems are accessed |
+| Schema and Contract Discipline | P5.1--P5.5 | How data shapes are defined and enforced |
+| Error Handling | P6.1--P6.5 | How failures are classified, propagated, and surfaced |
+| Orchestration Model | P7.1--P7.5 | How execution is sequenced and bounded |
+| Scalability and Extensibility | P8.1--P8.5 | How new capabilities are added |
+| Autonomous Agent Safety | P9.1--P9.5 | How agent authority is constrained |
 
 See [references/index.md](references/index.md) for the full principle index with links to each principle file.
 
@@ -85,6 +115,7 @@ See [references/index.md](references/index.md) for the full principle index with
 - Performance benchmarks
 - Security vulnerabilities (beyond agent safety principles)
 - Business logic correctness
+- Design intent without implementation evidence
 
 ---
 
@@ -93,18 +124,22 @@ See [references/index.md](references/index.md) for the full principle index with
 - **Behavior-first** -- assesses behavioral invariants, not implementation patterns. A function registry satisfies P4.2 as well as an MCP server.
 - **Framework-agnostic** -- works with any agent framework, language, or runtime.
 - **Trace-based** -- follows execution paths rather than scanning for file patterns.
-- **Honest verdicts** -- PASS requires strong evidence; documentation alone is insufficient.
+- **Honest verdicts** -- PASS requires strong implementation evidence; documentation alone is insufficient.
 - **Explicit applicability** -- a system classification step determines which principles are relevant before assessment begins.
 
 ## Verdicts
 
 | Verdict | Meaning |
 |---------|---------|
-| **PASS** | Clearly satisfied by observed evidence |
+| **PASS** | Clearly satisfied by observed implementation evidence |
 | **GAP** | Clearly violated by observed evidence |
 | **PARTIAL** | Partially satisfied -- something in place but incomplete |
 | **UNASSESSABLE** | Relevant but insufficient evidence to evaluate |
 | **N/A** | Architecturally irrelevant for this system type |
+
+### Behavioral verification
+
+Some principles cannot be fully assessed through static code analysis alone. When a principle requires runtime confirmation (e.g., guardrail enforcement under real execution), the assessment flags it in the **Behavioral Verification Register** with a suggested test case. Three principles are pre-identified as requiring behavioral verification: P7.3, P9.2, and P9.5.
 
 ---
 
@@ -139,8 +174,9 @@ See [references/index.md](references/index.md) for the full principle index with
 │       ├── sample-gap-register.md
 │       └── example-assessment-snippets.md
 ├── docs/                        # Development documentation
-│   ├── source-synthesis.md      # Design rationale and source material analysis
-│   └── framework-consistency-review.md
+│   ├── source-synthesis.md
+│   ├── framework-consistency-review.md
+│   └── repository-consistency-review.md
 └── README.md
 ```
 
@@ -168,11 +204,19 @@ See [references/index.md](references/index.md) for the full principle index with
 To update a target project to the latest framework version:
 
 ```bash
-# Remove old version and copy new
-rm -rf .claude/skills/agentic-audit/
-mkdir -p .claude/skills/agentic-audit
-cp /path/to/agentic-architecture-assessment/SKILL.md .claude/skills/agentic-audit/
-cp -r /path/to/agentic-architecture-assessment/references .claude/skills/agentic-audit/
+# Replace the entire skill folder with the newer version
+rm -rf .claude/skills/agentic-architecture-assessment/
+mkdir -p .claude/skills/agentic-architecture-assessment
+cp /path/to/agentic-architecture-assessment/SKILL.md .claude/skills/agentic-architecture-assessment/
+cp -r /path/to/agentic-architecture-assessment/references .claude/skills/agentic-architecture-assessment/
 ```
 
-Principle IDs (P1.1, P2.1, etc.) and the report format are stable across versions. Existing audit reports remain valid references after upgrading.
+- Do not merge files manually unless intentionally customizing the framework.
+- Assessment reports in the target project's `docs/assessments/` are independent and not affected by upgrades.
+- Principle IDs (P1.1, P2.1, etc.) and the report format are stable across versions.
+
+---
+
+## Versioning
+
+This framework does not yet use semantic versioning. Principle IDs and the report schema are treated as stable. Breaking changes to principle definitions or report structure will be documented in release notes when formal versioning is adopted.

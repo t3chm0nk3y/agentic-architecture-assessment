@@ -1,7 +1,7 @@
 # Framework Consistency Review
 
 **Date:** 2026-03-26
-**Scope:** Full review of the agentic-audit-skill framework across all reference files, domain overviews, and 44 principle files.
+**Scope:** Full review of the agentic-architecture-assessment framework across all reference files, domain overviews, and 44 principle files.
 
 ---
 
@@ -130,7 +130,7 @@ This cannot be verified without re-running the audit, but the verdict conditions
 - [x] All principle files conform to the canonical template
 - [x] Example files exist (sample gap register + assessment snippets)
 - [x] SKILL.md and README.md exist
-- [x] The framework is self-contained under agentic-audit-skill/
+- [x] The framework is self-contained under agentic-architecture-assessment/
 - [x] No monolithic principle file remains as the primary reference
 - [x] No principle depends on this repository's architecture assumptions
 - [x] References index.md cross-references all files
