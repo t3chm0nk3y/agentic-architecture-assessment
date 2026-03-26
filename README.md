@@ -1,10 +1,10 @@
 # Agentic Architecture Assessment
 
-A trace-based assessment skill for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that evaluates whether agentic system architecture is correctly implemented and enforced in runtime behavior.
+A trace-based assessment skill for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that evaluates whether an agentic application has been implemented according to critical best practices and whether its architecture is correctly enforced in runtime behavior.
 
 Assesses **44 behavioral principles** across **9 architectural domains** -- framework-agnostic, language-agnostic, behavior-first.
 
-This is not a design review. The assessment follows execution traces through source code to evaluate architecture, implementation enforcement, control-plane integrity, and failure-path behavior. Documentation alone cannot justify a passing verdict.
+This is not a design review. The assessment follows execution traces through source code to evaluate whether critical implementation practices are actually in place and enforced -- not merely documented or intended. Documentation alone cannot justify a passing verdict.
 
 ---
 
@@ -65,7 +65,7 @@ The skill runs three phases automatically:
 Reports are written to:
 
 ```
-docs/assessments/{project-name}-audit-{YYYY-MM-DD}.md
+docs/assessments/{project-name}-assessment-{YYYY-MM-DD}.md
 ```
 
 The output directory is created automatically if it does not exist.
@@ -82,17 +82,37 @@ These identifiers are intentionally aligned to prevent naming drift:
 | Skill folder | `.claude/skills/agentic-architecture-assessment/` |
 | Slash command | `/agentic-architecture-assessment` |
 
+No short alias is defined. All identifiers match the repository name.
+
 ---
 
-## What It Assesses
+## Critical Best Practices Assessed
 
-The assessment evaluates whether architectural intent is enforced in implementation and runtime behavior:
+The framework evaluates whether an agentic application correctly implements and enforces the practices that matter most for correctness, control, observability, safe autonomy, and extensibility.
 
-- **Architecture** -- module boundaries, dependency direction, separation of concerns
-- **Implementation enforcement** -- whether stated constraints are actually checked and rejected on violation
-- **Runtime behavior** -- execution paths, state transitions, failure propagation
-- **Control-plane integrity** -- configuration discipline, startup safety, orchestration bounds
-- **Traceability** -- whether execution and failure paths can be reconstructed after the fact
+Each practice below maps to one or more of the 44 principles assessed:
+
+| Practice | Why It Matters |
+|----------|---------------|
+| **Centralized execution control** | A single execution authority prevents scattered, uncoordinated agent runs and makes the system auditable. |
+| **Explicit orchestration model** | Deliberate orchestration with explicit state transitions prevents implicit, untraceable execution flows. |
+| **Separation of control plane and execution** | Transport layers that delegate to runtime -- rather than owning business logic -- keep execution semantics in one place. |
+| **Tool mediation and validation** | All external interactions through a single abstraction layer prevents uncontrolled side effects and enables instrumentation. |
+| **Schema and contract discipline** | Canonical data contracts defined once and validated at boundaries prevent data corruption across module lines. |
+| **LLM output validation** | Unvalidated LLM output flowing into downstream systems is a top failure mode -- validation must be enforced, not optional. |
+| **End-to-end observability** | Structured logging, trace propagation, and lifecycle events across all layers make failures diagnosable. |
+| **Error propagation with context** | Failures must propagate with classification, context, and trace identity -- silent swallowing is a critical gap. |
+| **Configuration-driven behavior** | Externalized, validated configuration prevents hardcoded values and ensures startup safety. |
+| **Bounded execution and termination control** | Autonomous agent loops must have explicit guardrails -- unbounded execution is a safety and cost risk. |
+| **Safe autonomy and guardrails** | Tool access control, approval gates, and restriction enforcement under composition constrain agent authority. |
+| **Truncation as completion, not failure** | Guardrail hits must produce controlled completion with truncation indicators, not crash the system. |
+| **Extensibility without core modification** | New workflows, tools, and skills must be addable without modifying the runtime or execution engine. |
+| **Identity and state propagation** | Every execution must carry a unique identifier propagated across all components for traceability. |
+| **Behavioral verification capability** | Some practices cannot be fully assessed statically -- the system must support runtime verification of critical constraints. |
+
+---
+
+## Assessment Domains
 
 | Domain | Principles | Governs |
 |--------|-----------|---------|
@@ -110,11 +130,15 @@ See [references/index.md](references/index.md) for the full principle index with
 
 ## What It Does Not Assess
 
-- Code quality or style
-- Test coverage
+This framework does not evaluate:
+
+- Code style or aesthetic preferences
+- Test coverage metrics
 - Performance benchmarks
 - Security vulnerabilities (beyond agent safety principles)
 - Business logic correctness
+- Framework or language preference
+- UI/UX design quality
 - Design intent without implementation evidence
 
 ---
@@ -176,7 +200,8 @@ Some principles cannot be fully assessed through static code analysis alone. Whe
 ├── docs/                        # Development documentation
 │   ├── source-synthesis.md
 │   ├── framework-consistency-review.md
-│   └── repository-consistency-review.md
+│   ├── repository-consistency-review.md
+│   └── repository-improvements-summary.md
 └── README.md
 ```
 
@@ -211,7 +236,7 @@ cp /path/to/agentic-architecture-assessment/SKILL.md .claude/skills/agentic-arch
 cp -r /path/to/agentic-architecture-assessment/references .claude/skills/agentic-architecture-assessment/
 ```
 
-- Do not merge files manually unless intentionally customizing the framework.
+- Replace the entire skill folder -- do not merge files manually unless intentionally customizing.
 - Assessment reports in the target project's `docs/assessments/` are independent and not affected by upgrades.
 - Principle IDs (P1.1, P2.1, etc.) and the report format are stable across versions.
 

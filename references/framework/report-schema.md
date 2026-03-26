@@ -23,7 +23,7 @@ The report must contain these sections in this order:
 ## 1. Header
 
 ```markdown
-# Agentic Architecture Audit — {Project Name}
+# Agentic Architecture Assessment — {Project Name}
 **Date:** {YYYY-MM-DD}
 **Auditor:** {auditor identity}
 **Evidence Sources:** {list of key files and docs reviewed}
@@ -192,7 +192,7 @@ For small projects (single file or under ~500 lines, no infrastructure, no multi
 Reports are written to:
 
 ```
-docs/assessments/{project-name}-audit-{YYYY-MM-DD}.md
+docs/assessments/{project-name}-assessment-{YYYY-MM-DD}.md
 ```
 
 Create the directory if it does not exist.

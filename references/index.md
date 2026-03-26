@@ -2,6 +2,8 @@
 
 Master index of all framework documents, domain overviews, and principles.
 
+These references support the assessment of critical best practices for agentic applications. They define the behavioral principles that an effective agentic system must implement and enforce, the methodology for evaluating implementation quality through trace-based evidence collection, and the structured reporting format for findings. The references are organized into assessment methodology (framework), domain-specific principles with verdict guidance (domains), and calibration material (examples).
+
 ---
 
 ## Framework
@@ -135,7 +137,7 @@ Master index of all framework documents, domain overviews, and principles.
 
 | Document | Purpose |
 |----------|---------|
-| [sample-gap-register.md](examples/sample-gap-register.md) | Complete example audit report for calibration |
+| [sample-gap-register.md](examples/sample-gap-register.md) | Complete example assessment report for calibration |
 | [example-assessment-snippets.md](examples/example-assessment-snippets.md) | Good/weak verdict justification examples |
 
 ---

@@ -1,12 +1,12 @@
 ---
 name: agentic-architecture-assessment
-description: Trace-based assessment of agentic system architecture, implementation enforcement, and runtime behavior. Evaluates 44 behavioral principles across 9 domains. Produces a structured gap register. Framework-agnostic, language-agnostic, behavior-first.
+description: Assess whether an agentic application has been implemented according to critical best practices for correctness, control, observability, safe autonomy, and extensibility. Trace-based evaluation of 44 behavioral principles across 9 domains. Produces a structured gap register. Framework-agnostic, language-agnostic, behavior-first.
 disable-model-invocation: true
 ---
 
 # /agentic-architecture-assessment — Agentic Architecture Assessment
 
-Assess the current project against agentic architecture principles. Evaluate whether architectural intent is correctly implemented and enforced in runtime behavior. Produce a structured gap register report that identifies architectural deviations, implementation gaps, enforcement failures, and safety constraints.
+Assess whether the current project has been implemented according to critical best practices required for a highly effective agentic system. Evaluate whether architectural intent is correctly enforced in implementation and runtime behavior. Produce a structured gap register report that identifies deviations from best practices, implementation gaps, enforcement failures, and safety constraints.
 
 This skill is portable — it assesses any agentic application regardless of framework, language, or stack. It reasons from behavioral invariants, not implementation patterns. It evaluates architecture, implementation enforcement, and runtime behavior — not design intent alone.
 
@@ -115,7 +115,7 @@ Assess each applicable principle using the verdict definitions from `references/
 
 Write the report following the structure in `references/framework/report-schema.md`.
 
-**Report output:** `docs/assessments/{project-name}-audit-{YYYY-MM-DD}.md`
+**Report output:** `docs/assessments/{project-name}-assessment-{YYYY-MM-DD}.md`
 
 ---
 

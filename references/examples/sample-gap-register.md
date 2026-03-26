@@ -4,12 +4,12 @@ This document provides a realistic example of a gap register report produced by 
 
 ---
 
-## Example: API-Backed Agent Platform Audit
+## Example: API-Backed Agent Platform Assessment
 
 ### Header
 
 ```markdown
-# Agentic Architecture Audit — Example Platform
+# Agentic Architecture Assessment — Example Platform
 **Date:** 2026-03-15
 **Auditor:** Claude Code
 **Evidence Sources:** docs/design-spec.md, src/runtime/, src/api/, src/adapters/, config.yaml, tests/
